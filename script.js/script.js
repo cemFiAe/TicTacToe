@@ -57,6 +57,42 @@ function handleClick(index) {
     }
 }
 
+function drawWinningLine(a, b, c) {
+    const gameBoard = document.querySelector('.game-board');
+    if (!gameBoard) return;
+
+    const line = document.createElement('div');
+    line.classList.add('winning-line');
+
+    const cellA = document.getElementById(`cell-${a}`).getBoundingClientRect();
+    const cellC = document.getElementById(`cell-${c}`).getBoundingClientRect();
+
+    const gameBoardRect = gameBoard.getBoundingClientRect();
+
+    const x1 = (cellA.left + cellA.right) / 2 - gameBoardRect.left;
+    const y1 = (cellA.top + cellA.bottom) / 2 - gameBoardRect.top;
+    const x2 = (cellC.left + cellC.right) / 2 - gameBoardRect.left;
+    const y2 = (cellC.top + cellC.bottom) / 2 - gameBoardRect.top;
+
+    const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+    const length = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+
+    line.style.width = `${length}px`;
+    line.style.height = '5px';
+    line.style.background = 'white';
+    line.style.position = 'absolute';
+    line.style.left = `${x1}px`;
+    line.style.top = `${y1}px`;
+    line.style.transformOrigin = 'left center';
+    line.style.transform = `translateY(-50%) rotate(${angle}deg)`;
+    line.style.zIndex = '2';
+
+    gameBoard.style.position = 'relative';
+    gameBoard.appendChild(line);
+}
+
+
+
 function updateStatus() {
     let statusHTML = `<div class="current-player text-center mb-3">
         <span class="player ${currentPlayer === 'circle' ? 'active' : 'inactive'}">Spieler <strong style="color:#24ACE3">O</strong></span>
@@ -67,7 +103,12 @@ function updateStatus() {
 }
 
 function checkWinner() {
-    const winnerElement = document.getElementById('winner');
+    let winnerElement = document.getElementById('winner');
+
+    if (!winnerElement) {
+    render(); // Falls das Element fehlt, Spiel erneut rendern
+    winnerElement = document.getElementById('winner');
+    }
 
 
     const winningCombinations = [
@@ -80,18 +121,17 @@ function checkWinner() {
         const [a, b, c] = combination;
         if (fields[a] !== null && fields[a] === fields[b] && fields[a] === fields[c]) {
             gameOver = true;
-            winnerElement.innerHTML += `Spieler ${fields[a] === 'circle' ? '<strong style="color:#24ACE3">O</strong>' : '<strong style="color:#FDBE00">X</strong>'} gewinnt!`;
+            winnerElement.innerHTML = `Spieler ${fields[a] === 'circle' ? '<strong style="color:#24ACE3">O</strong>' : '<strong style="color:#FDBE00">X</strong>'} gewinnt!`;
+            drawWinningLine(a, b, c);
             showRestartButton();
             return;
         }
     }
 
-    if (!fields.includes(null)) {
+    if (!fields.includes(null) && !gameOver) {
         gameOver = true;
-        setTimeout(() => {
-            document.getElementById('winner').innerHTML = 'Unentschieden!';
-            showRestartButton();
-        }, 100);
+        winnerElement.innerHTML = 'Unentschieden!';
+        showRestartButton();
     }
 }
 

@@ -63,8 +63,13 @@ h1{
     }
 }
 
-
-
+.winning-line {
+    position: absolute;
+    height: 5px;
+    background: white;
+    transform-origin: left center;
+    z-index: 1;
+}
 
 .text-circle {
     color: #24ACE3;
