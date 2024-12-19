@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+body{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    box-sizing: border-box;
+    background-color: #323232;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    font-size: 50px;
+}
+h1{
+    color: #FDBE00;
+}
+.mx-2{
+    color: red;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.fixed-circle, .fixed-cross {
+    display: inline-block;
+}
+
+.no-animation {
+    animation: none !important;
+}
+
+.animated-circle{
+    display: inline-block;
+    animation: pop-in 0.5s ease-out;
+}
+
+@keyframes pop-in {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.animated-cross{
+    display: inline-block;
+    animation: fade-in 0.5s ease-out;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
+
+
+.text-circle {
+    color: #24ACE3;
+}
+
+.text-cross {
+    color: #FDBE00;
+}
+
+.border-end {
+    border-right: 2px solid white;
+}
+
+.border-bottom {
+    border-bottom: 2px solid white;
+}
+
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 0;
+}
+
+.game-cell {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+}
+.game-cell:hover{
+    background-color: rgba(255, 255, 255, 0.17);
+}
+
+.player {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+.inactive {
+    opacity: 0.5;
+}
+
+.active {
+    opacity: 1;
+}
+#winner{
+    color: wheat;
+    font-size: 30px;
+}
+
+/* Für kleinere Bildschirme, z. B. Smartphones */
+@media (max-width: 600px) {
+    .game-board {
+        grid-template-columns: repeat(3, 70px);
+        grid-template-rows: repeat(3, 70px);
+    }
+
+    .game-cell {
+        width: 70px;
+        height: 70px;
+        font-size: 2rem;
+    }
+
+    .player {
+        font-size: 1.2rem;
+    }
+
+    #winner {
+        font-size: 1.5rem;
+    }
+}
+
+/* Für Tablets und mittelgroße Bildschirme */
+@media (min-width: 601px) and (max-width: 1024px) {
+    .game-board {
+        grid-template-columns: repeat(3, 90px);
+        grid-template-rows: repeat(3, 90px);
+    }
+
+    .game-cell {
+        width: 90px;
+        height: 90px;
+        font-size: 2.5rem;
+    }
+
+    .player {
+        font-size: 1.5rem;
+    }
+
+    #winner {
+        font-size: 2rem;
+    }
+}
+
+/* Für größere Bildschirme */
+@media (min-width: 1025px) {
+    .game-board {
+        grid-template-columns: repeat(3, 120px);
+        grid-template-rows: repeat(3, 120px);
+    }
+
+    .game-cell {
+        width: 120px;
+        height: 120px;
+        font-size: 3rem;
+    }
+
+    .player {
+        font-size: 2rem;
+    }
+
+    #winner {
+        font-size: 2.5rem;
+    }
+}
